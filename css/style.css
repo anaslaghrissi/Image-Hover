@@ -1,0 +1,99 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  color: #fff;
+  background-color: #111;
+  font: clamp(0.75rem, 0.3rem + 1.9vw, 1.5rem) / 1.1 "Koulen", sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.wrapper {
+  display: grid;
+  gap: 30px;
+  width: min(900px, 100%);
+}
+@property --radius {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: -5%;
+}
+
+@keyframes scene-transition {
+  to {
+    --radius: 105%;
+  }
+}
+
+.scenes {
+  position: relative;
+  aspect-ratio: 2.4 / 1;
+  outline: 2px solid #ccc;
+}
+
+.scene-1,
+.scene-2 {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+}
+
+.scene-1 {
+  background-image: url(https://cdn.pixabay.com/photo/2019/03/11/09/52/car-4048218_960_720.jpg);
+}
+
+.scene-2 {
+  background-image: url(https://cdn.pixabay.com/photo/2017/03/28/08/43/mercedes-2181380_960_720.jpg);
+  z-index: -1;
+  -webkit-mask-image: radial-gradient(
+    circle,
+    #fff calc(var(--radius) - 5%),
+    transparent calc(var(--radius) + 5%)
+  );
+}
+
+.scenes:is(:hover, :focus) .scene-2 {
+  z-index: 1;
+  animation: scene-transition 2s linear forwards;
+}
+
+.scene-title {
+  position: absolute;
+  max-width: 45%;
+  margin: min(40px, 4vw);
+  font-size: 1.25em;
+}
+
+.scene-1 .scene-title {
+  top: 0;
+  right: 0;
+  color: #ff0;
+  text-align: right;
+}
+.scene-2 .stars {
+  padding: 20px 30px;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+.scene-2 .icons {
+  padding: 20px 30px;
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+}
+.scene-2 .fa-solid {
+  color: #ff0;
+  filter: drop-shadow(0 5px 15px #ff0);
+}
